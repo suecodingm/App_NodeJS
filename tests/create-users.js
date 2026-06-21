@@ -5,6 +5,9 @@ export const options = {
   iterations: 500
 };
 
+// pasamos la ip como argumento
+const BASE_URL = __ENV.API_URL 
+
 export default function () {
 
   const id = __ITER + 1;
@@ -16,7 +19,7 @@ export default function () {
   });
 
   http.post(
-    'http://35.202.99.85:30081/api/usuarios',
+    `${BASE_URL}/api/usuarios`,
     payload,
     {
       headers: {

@@ -10,20 +10,22 @@ export const options = {
   ]
 };
 
+const BASE_URL = __ENV.API_URL
+
 export default function () {
 
   let r = Math.random();
 
   if (r < 0.6) {
 
-    http.get('http://44.201.194.184:30081/api/usuarios');
+    http.get(`${BASE_URL}/api/usuarios`);
 
   } else if (r < 0.9) {
 
     const userId = Math.floor(Math.random() * 500) + 1;
 
     http.get(
-      `http://44.201.194.184:30081/api/usuarios/${userId}`
+      `${BASE_URL}/api/usuarios/${userId}`
     );
 
   } else {
@@ -38,7 +40,7 @@ export default function () {
     });
 
     http.post(
-      'http://44.201.194.184:30081/api/transacciones',
+      `${BASE_URL}/api/transacciones`,
       payload,
       {
         headers: {

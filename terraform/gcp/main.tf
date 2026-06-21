@@ -38,6 +38,12 @@ resource "google_compute_firewall" "ssh" {
   source_ranges = ["0.0.0.0/0"]
 }
 
+resource "google_compute_address" "control_plane_ip" {
+  name = "control-plane-static-ip"
+}
+
+
+
 resource "google_compute_firewall" "k3s" {
   name    = "allow-k3s"
   network = google_compute_network.k3s_network.name
@@ -82,7 +88,9 @@ resource "google_compute_instance" "control_plane" {
 
     subnetwork = google_compute_subnetwork.k3s_subnet.id
 
-    access_config {}
+    access_config {
+	 nat_ip = google_compute_address.control_plane_ip.address
+	}
   }
 
   metadata_startup_script = <<-EOF
@@ -118,7 +126,9 @@ resource "google_compute_instance" "worker" {
 
     subnetwork = google_compute_subnetwork.k3s_subnet.id
 
-    access_config {}
+    access_config {
+	# nat_ip = google_compute_address.control_plane_ip.address
+	}
   }
 
   metadata_startup_script = <<-EOF

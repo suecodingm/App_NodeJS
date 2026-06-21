@@ -16,7 +16,7 @@ export default function () {
   });
 
   http.post(
-    'http://44.201.194.184:30081/api/usuarios',
+    'http://35.202.99.85:30081/api/usuarios',
     payload,
     {
       headers: {

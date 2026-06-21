@@ -53,6 +53,18 @@ resource "google_compute_firewall" "k3s" {
   source_ranges = ["0.0.0.0/0"]
 }
 
+resource "google_compute_firewall" "k3s_internal_all" {
+
+  name    = "allow-k3s-internal-all"
+  network = google_compute_network.k3s_network.name
+
+  allow {
+    protocol = "all"
+  }
+
+  source_ranges = ["10.10.0.0/24"]
+}
+
 resource "google_compute_instance" "control_plane" {
 
   name         = "gcp-control-plane"

@@ -1,6 +1,9 @@
 
 FROM node:24-alpine AS build
 
+# Actualizar los paquetes del sistema para aplicar parches de seguridad
+RUN apk update && apk upgrade --no-cache
+
 WORKDIR /app
 
 # copiamos el archivo de package

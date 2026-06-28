@@ -55,6 +55,15 @@ jobs:
         format: table
         exit-code: '0' #usamos 0 para no cortar el flujo, 1 corta la ejecucion
         severity: CRITICAL,HIGH
+
+
+    - name: Scan Kubernetes Manifests
+      uses: aquasecurity/trivy-action@0.28.0
+      with:
+        scan-type: config
+        scan-ref: ./kubernetes
+        format: table
+        exit-code: '0'
         
     - name: Push Docker image
       run: |

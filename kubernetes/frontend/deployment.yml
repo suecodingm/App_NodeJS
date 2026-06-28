@@ -28,7 +28,12 @@ spec:
 
           image: ghcr.io/suecodingm/app-frontend:latest #descargamos la imagen que previamente subimos a gitub
           imagePullPolicy: Always #para descargar siempre la última versión de la imagen del backend desde
-
+          securityContext:
+            allowPrivilegeEscalation: false
+      
+            capabilities:
+              drop:
+                - ALL
           ports:
             - containerPort: 80
 

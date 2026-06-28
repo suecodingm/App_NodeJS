@@ -32,6 +32,8 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t ghcr.io/suecodingm/app-backend:latest ./backend
+
+        
     - name: Run Trivy Scan
       uses: aquasecurity/trivy-action@master
       with:
@@ -39,6 +41,14 @@ jobs:
         format: table
         exit-code: '0'  #usamos cero para no cortar el pipeline, si usamos 1 ya no se despliega
         severity: CRITICAL,HIGH
+        
+    - name: Scan Kubernetes Manifests
+      uses: aquasecurity/trivy-action@0.28.0
+      with:
+        scan-type: config
+        scan-ref: ./kubernetes
+        format: table
+        exit-code: '0'
         
     - name: Push Docker image
       run: |

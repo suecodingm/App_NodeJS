@@ -47,7 +47,15 @@ jobs:
         docker build \
           --build-arg REACT_APP_API_URL=http://${{ env.API_IP }}:30081 \
           -t ghcr.io/suecodingm/app-frontend:latest ./frontend
-
+          
+    - name: Run Trivy Scan
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ghcr.io/suecodingm/app-frontend:latest
+        format: table
+        exit-code: '0' #usamos 0 para no cortar el flujo, 1 corta la ejecucion
+        severity: CRITICAL,HIGH
+        
     - name: Push Docker image
       run: |
         docker push ghcr.io/suecodingm/app-frontend:latest
